@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  NotEnoughInStockError = Class.new(StandardError)
+
   has_many :product_articles, dependent: :destroy
   accepts_nested_attributes_for :product_articles
 
@@ -16,4 +18,19 @@ class Product < ApplicationRecord
       .left_joins(:articles)
       .group('products.id')
   }
+
+  def sell!(quantity: 0)
+    raise NotEnoughInStockError, "There are not enough products available in stock" if quantity > available
+
+    ActiveRecord::Base.transaction do
+      articles.each do |article|
+        article.stock -= quantity * product_articles.find_by(article_code: article.code).amount
+        article.save!
+      end
+    end
+  end
+
+  def available
+    Product.where(id: id).with_available_quantity.first.available_quantity
+  end
 end
