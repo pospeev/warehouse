@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Run the app with docker locally:
 
-Things you may want to cover:
+To build the container and all its dependencies run
+```
+docker-compose build
+```
 
-* Ruby version
+Then setup the database:
+```
+docker-compose run --rm app rake db:setup
+```
+If everything went fine you should be able to run
+```
+docker-compose up
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You can find the swagger docs on [http://localhost:3000/swagger_doc](http://localhost:3000/swagger_doc)
+Put the URL into some REST client like [insomnia](https://insomnia.rest/) or browse it via [Swagger UI](https://petstore.swagger.io/#/)
