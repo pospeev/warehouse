@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  has_many :product_articles
+  has_many :product_articles, dependent: :destroy
   accepts_nested_attributes_for :product_articles
 
   has_many :articles, through: :product_articles, foreign_key: :article_code
@@ -11,9 +11,9 @@ class Product < ApplicationRecord
   # LEFT OUTER JOIN "product_articles" ON "product_articles"."product_id" = "products"."id"
   # LEFT OUTER JOIN "articles" ON "articles"."code" = "product_articles"."article_code"
   # GROUP BY products.id
-  scope :with_available_quantity, -> {
-    select("products.*, COALESCE(MIN(articles.stock / product_articles.amount), 0) AS available_quantity")
+  scope :with_available_quantity, lambda {
+    select('products.*, COALESCE(MIN(articles.stock / product_articles.amount), 0) AS available_quantity')
       .left_joins(:articles)
-      .group("products.id")
+      .group('products.id')
   }
 end
