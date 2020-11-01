@@ -48,5 +48,14 @@ RSpec.describe Product, type: :model do
         expect(subject.available_quantity).to eq(0)
       end
     end
+
+
+    context "when no article is present" do
+      subject { Product.with_available_quantity.first }
+
+      it "shows zero available quantity of the product" do
+        expect(subject.available_quantity).to eq(0)
+      end
+    end
   end
 end

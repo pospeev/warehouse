@@ -6,14 +6,14 @@ class Product < ApplicationRecord
 
   # The scope below produces this query:
   # SELECT products.*,
-  #        MIN(articles.stock / product_articles.amount) AS available_quantity
+  #        COALESCE(MIN(articles.stock / product_articles.amount), 0) AS available_quantity
   # FROM "products"
-  # INNER JOIN "product_articles" ON "product_articles"."product_id" = "products"."id"
-  # INNER JOIN "articles" ON "articles"."code" = "product_articles"."article_code"
+  # LEFT OUTER JOIN "product_articles" ON "product_articles"."product_id" = "products"."id"
+  # LEFT OUTER JOIN "articles" ON "articles"."code" = "product_articles"."article_code"
   # GROUP BY products.id
   scope :with_available_quantity, -> {
-    select("products.*, MIN(articles.stock / product_articles.amount) AS available_quantity")
-      .joins(:articles)
+    select("products.*, COALESCE(MIN(articles.stock / product_articles.amount), 0) AS available_quantity")
+      .left_joins(:articles)
       .group("products.id")
   }
 end
