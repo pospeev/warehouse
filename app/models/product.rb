@@ -6,6 +6,8 @@ class Product < ApplicationRecord
 
   has_many :articles, through: :product_articles, foreign_key: :article_code
 
+  attribute :available_quantity, :integer
+
   # The scope below produces this query:
   # SELECT products.*,
   #        COALESCE(MIN(articles.stock / product_articles.amount), 0) AS available_quantity
@@ -27,10 +29,11 @@ class Product < ApplicationRecord
         article.stock -= quantity * product_articles.find_by(article_code: article.code).amount
         article.save!
       end
+      self.available_quantity -= 1
     end
   end
 
   def available
-    Product.where(id: id).with_available_quantity.first.available_quantity
+    @available_quantity ||= Product.with_available_quantity.find(id).available_quantity
   end
 end
