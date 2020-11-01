@@ -11,58 +11,24 @@ Product.create([
   {
     name: "Dining Chair",
     product_articles_attributes: [
-      {
-        article_code: "1",
-        amount: 4
-      },
-      {
-        article_code: "2",
-        amount: 8
-      },
-      {
-        article_code: "3",
-        amount: 1
-      }
+      { article_code: "1", amount: 4 },
+      { article_code: "2", amount: 8 },
+      { article_code: "3", amount: 1 }
     ]
   },
   {
     name: "Dinning Table",
     product_articles_attributes: [
-      {
-        article_code: "1",
-        amount: 4
-      },
-      {
-        article_code: "2",
-        amount: 8
-      },
-      {
-        article_code: "4",
-        amount: 1
-      }
+      { article_code: "1", amount: 4 },
+      { article_code: "2", amount: 8 },
+      { article_code: "4", amount: 1 }
     ]
   }
 ])
 
 Article.create([
-  {
-    code: "1",
-    name: "leg",
-    stock: 12
-  },
-  {
-    code: "2",
-    name: "screw",
-    stock: 17
-  },
-  {
-    code: "3",
-    name: "seat",
-    stock: 2
-  },
-  {
-    code: "4",
-    name: "table top",
-    stock: 1
-  }
+  { code: "1", name: "leg", stock: 12 },
+  { code: "2", name: "screw", stock: 17 },
+  { code: "3", name: "seat", stock: 2 },
+  { code: "4", name: "table top", stock: 1 }
 ])
