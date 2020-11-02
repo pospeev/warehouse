@@ -19,3 +19,16 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  Exclude:
+    - 'spec/api/warehouse/products_spec.rb'
+    - 'spec/models/product_spec.rb'
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'spec/api/warehouse/products_spec.rb'
+    - 'spec/models/product_spec.rb'
