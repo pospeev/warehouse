@@ -85,6 +85,20 @@ RSpec.describe Product, type: :model do
                                             .and change { article3.reload.stock }.from(1).to(0)
       end
     end
+
+    context 'when one article is missing' do
+      let!(:article1) { Article.create({ code: '1', name: 'leg', stock: 3 }) }
+      let!(:article2) { Article.create({ code: '2', name: 'screw', stock: 17 }) }
+      let!(:article3) { Article.create({ code: '4', name: 'table top', stock: 1 }) }
+
+      it 'changes the stock for each item' do
+        expect { product.sell!(quantity: 1) }.to change { product.available_quantity }.by(0)
+                                                .and change { article1.reload.stock }.by(0)
+                                                .and change { article2.reload.stock }.by(0)
+                                                .and change { article3.reload.stock }.by(0)
+                                                .and raise_error(Product::NotEnoughInStockError)s
+      end
+    end
   end
 end
 # rubocop:enable Layout/MultilineMethodCallIndentation
