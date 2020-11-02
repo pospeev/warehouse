@@ -9,7 +9,7 @@ docker-compose build
 
 Then setup the database:
 ```
-docker-compose run --rm app rake db:setup
+docker-compose run --rm app rake db:drop && rake db:create && rake db:migrate && rake db:seed
 ```
 If everything went fine you should be able to run
 ```
