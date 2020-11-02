@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_11_01_112300) do
     t.integer "stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_articles_on_code", unique: true
   end
 
   create_table "product_articles", force: :cascade do |t|
