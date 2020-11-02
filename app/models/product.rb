@@ -22,18 +22,23 @@ class Product < ApplicationRecord
   }
 
   def sell!(quantity: 0)
-    raise NotEnoughInStockError, "There are not enough products available in stock" if quantity > available
+    raise NotEnoughInStockError, 'There are not enough products available in stock' if quantity > available_quantity
 
     ActiveRecord::Base.transaction do
       articles.each do |article|
         article.stock -= quantity * product_articles.find_by(article_code: article.code).amount
         article.save!
       end
-      self.available_quantity -= 1
     end
+
+    self.available_quantity -= quantity
   end
 
-  def available
-    @available_quantity ||= Product.with_available_quantity.find(id).available_quantity
+  def available_quantity
+    @available_quantity ||= Product.with_available_quantity.find(id).attributes['available_quantity']
   end
+
+  private
+
+  attr_writer :available_quantity
 end
