@@ -1,8 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable Layout/MultilineMethodCallIndentation
-# rubocop:disable Layout/FirstHashElementIndentation
-# rubocop:disable Layout/FirstArrayElementIndentation
 RSpec.describe Product, type: :model do
   it { is_expected.to have_many(:product_articles) }
   it { should accept_nested_attributes_for(:product_articles) }
@@ -96,11 +93,8 @@ RSpec.describe Product, type: :model do
                                                 .and change { article1.reload.stock }.by(0)
                                                 .and change { article2.reload.stock }.by(0)
                                                 .and change { article3.reload.stock }.by(0)
-                                                .and raise_error(Product::NotEnoughInStockError)s
+                                                .and raise_error(Product::NotEnoughInStockError)
       end
     end
   end
 end
-# rubocop:enable Layout/MultilineMethodCallIndentation
-# rubocop:enable Layout/FirstHashElementIndentation
-# rubocop:enable Layout/FirstArrayElementIndentation
